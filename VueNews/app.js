@@ -57,19 +57,21 @@ const vm = new Vue({
       );
 
       // Put Array into Chunks(1 col has 4 posts.)
-      // let i, j, chunkedArray = [], chunk = 4;
-      // for(let i=0, j=0; i < posts.length; i += chunk, j++){
-      //   if(JSON.stringify(posts[i]['per_facet']).match(/Trump/i)){
-      //     chunkedArray[j] = posts.slice(i,i+chunk);
-      //   }
-      // }
-      let chunkedArray = [];
-      posts.forEach(post => {
-        if(JSON.stringify(post['per_facet']).match(/Trump/i)){
-          chunkedArray.push(post);
-        }
-      });
+      let i, j, chunkedArray = [], chunk = 4;
+      for(let i=0, j=0; i < posts.length; i += chunk, j++){
+        //if(JSON.stringify(posts[i]['per_facet']).match(/Trump/i)){
+          chunkedArray[j] = posts.slice(i,i+chunk);
+        //}
+      }
       return chunkedArray;
+      
+      // let chunkedArray = [];
+      // posts.forEach(post => {
+      //   if(JSON.stringify(post['per_facet']).match(/Trump/i)){
+      //     chunkedArray.push(post);
+      //   }
+      // });
+      //return chunkedArray;
     }
   }
 });
