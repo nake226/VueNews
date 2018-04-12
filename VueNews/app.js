@@ -24,6 +24,8 @@ const vm = new Vue({
   methods: {
     getPosts(section){
       let url = setUrl(section);
+      // If you don't use arrow func, use 'bind(this)' like this.
+      // axios.get(url).then(function(res){this.results = res.data.results;}.bind(this)).catch(function(err){console.log(err);});
       axios.get(url)
       .then(
         response => {
