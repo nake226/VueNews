@@ -22,6 +22,10 @@ const vm = new Vue({
     this.getPosts('home');
   },
   methods: {
+    /**
+     * get posts by connecting url
+     * @param {*} section 
+     */
     getPosts(section){
       let url = setUrl(section);
       // If you don't use arrow func, use 'bind(this)' like this.
@@ -36,6 +40,28 @@ const vm = new Vue({
           console.log(error);
         }
       );
+    }
+  },
+  computed: {
+    processedPosts(){
+      let posts = this.results;
+
+      // Add image_url attribute to posts got by axios
+      posts.map(
+        // If you dislike arrow func, use it.
+        // function(post){let imgObj = post.multimedia.find(function(media){media.format === "superJumbo"});}
+        post => {
+          let imgObj = post.multimedia.find(media => media.format === "superJumbo");
+          post.image_url = imgObj ? imgObj.url:"http://placehold.it/300x200?text=N/A";
+        }
+      );
+
+      // Put Array into Chunks(1 col has 4 posts.)
+      let i, j, chunkedArray = [], chunk = 4;
+      for(let i=0, j=0; i < posts.length; i += chunk, j++){
+        chunkedArray[j] = posts.slice(i,i+chunk);
+      }
+      return chunkedArray;
     }
   }
 });
