@@ -45,7 +45,7 @@ const vm = new Vue({
   computed: {
     processedPosts(){
       let posts = this.results;
-
+      
       // Add image_url attribute to posts got by axios
       posts.map(
         // If you dislike arrow func, use it.
@@ -57,10 +57,18 @@ const vm = new Vue({
       );
 
       // Put Array into Chunks(1 col has 4 posts.)
-      let i, j, chunkedArray = [], chunk = 4;
-      for(let i=0, j=0; i < posts.length; i += chunk, j++){
-        chunkedArray[j] = posts.slice(i,i+chunk);
-      }
+      // let i, j, chunkedArray = [], chunk = 4;
+      // for(let i=0, j=0; i < posts.length; i += chunk, j++){
+      //   if(JSON.stringify(posts[i]['per_facet']).match(/Trump/i)){
+      //     chunkedArray[j] = posts.slice(i,i+chunk);
+      //   }
+      // }
+      let chunkedArray = [];
+      posts.forEach(post => {
+        if(JSON.stringify(post['per_facet']).match(/Trump/i)){
+          chunkedArray.push(post);
+        }
+      });
       return chunkedArray;
     }
   }
