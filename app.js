@@ -24,12 +24,10 @@ const vm = new Vue({
   methods: {
     /**
      * get posts by connecting url
-     * @param {*} section 
+     * @param {*} section => url
      */
     getPosts(section){
       let url = setUrl(section);
-      // If you don't use arrow func, use 'bind(this)' like this.
-      // axios.get(url).then(function(res){this.results = res.data.results;}.bind(this)).catch(function(err){console.log(err);});
       axios.get(url)
       .then(
         response => {
@@ -43,35 +41,32 @@ const vm = new Vue({
     }
   },
   computed: {
+    /**
+     * add some function and arrangement to results, which are...
+     * 1. add image_url attribute to posts 
+     * 2. arrange news for 4posts by 1rows.
+     * (3). You can show only posts including 'Trump' in tags.
+     */
     processedPosts(){
       let posts = this.results;
       
-      // Add image_url attribute to posts got by axios
+      // 1. ''
       posts.map(
-        // If you dislike arrow func, use it.
-        // function(post){let imgObj = post.multimedia.find(function(media){media.format === "superJumbo"});}
         post => {
           let imgObj = post.multimedia.find(media => media.format === "superJumbo");
           post.image_url = imgObj ? imgObj.url:"http://placehold.it/300x200?text=N/A";
         }
       );
 
-      // Put Array into Chunks(1 col has 4 posts.)
+      // 2. ''
       let i, j, chunkedArray = [], chunk = 4;
       for(let i=0, j=0; i < posts.length; i += chunk, j++){
+        // 3. ''
         //if(JSON.stringify(posts[i]['per_facet']).match(/Trump/i)){
           chunkedArray[j] = posts.slice(i,i+chunk);
         //}
       }
       return chunkedArray;
-      
-      // let chunkedArray = [];
-      // posts.forEach(post => {
-      //   if(JSON.stringify(post['per_facet']).match(/Trump/i)){
-      //     chunkedArray.push(post);
-      //   }
-      // });
-      //return chunkedArray;
     }
   }
 });
