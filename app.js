@@ -17,8 +17,8 @@ function setUrl(url){
  * component: newsList
  * By changing newsList-UI to component, you can reuse it somewhere else.
  */
-Vue.component('newsList', {
-  props: [results],
+Vue.component('news-list', {
+  props: ['results'],
   template: `
     <section>
       <div class="row" v-for="posts in processedPosts">
