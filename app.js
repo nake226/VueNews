@@ -15,7 +15,7 @@ function setUrl(url){
 
 /**
  * component: newsList
- * By changing newsList-UI to component, you can reuse it somewhere else.
+ * By changing newsList-UI to component, you can reuse it somewhere else like other html.
  */
 Vue.component('news-list', {
   props: ['results'],
