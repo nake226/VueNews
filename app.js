@@ -13,33 +13,32 @@ function setUrl(url){
   return ApiBaseUrl + url + '.json?api-key=' + ApiKey;
 }
 
-const vm = new Vue({
-  el: '#app',
-  data: {
-    results: [ /* news posts data */ ]
-  }, 
-  mounted(){
-    this.getPosts('home');
-  },
-  methods: {
-    /**
-     * get posts by connecting url
-     * @param {*} section => url
-     */
-    getPosts(section){
-      let url = setUrl(section);
-      axios.get(url)
-      .then(
-        response => {
-          this.results = response.data.results;
-        }
-      ).catch(
-        error => {
-          console.log(error);
-        }
-      );
-    }
-  },
+/**
+ * component: newsList
+ * By changing newsList-UI to component, you can reuse it somewhere else.
+ */
+Vue.component('newsList', {
+  props: [results],
+  template: `
+    <section>
+      <div class="row" v-for="posts in processedPosts">
+        <div class="columns large-3 medium-6" v-for="post in posts">
+          <div class="card">
+            <!-- News Title -->
+            <div class="card-divider">
+              {{ post.title }}
+            </div>
+            <!-- News Thumbnail -->
+            <a :href="post.url" target="_blank"><img :src="post.image_url"></a>
+            <!-- News Summary -->
+            <div class="card-section">
+              {{ post.abstract }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `,
   computed: {
     /**
      * add some function and arrangement to results, which are...
@@ -67,6 +66,35 @@ const vm = new Vue({
         //}
       }
       return chunkedArray;
+    }
+  }
+})
+
+const vm = new Vue({
+  el: '#app',
+  data: {
+    results: [ /* news posts data */ ]
+  }, 
+  mounted(){
+    this.getPosts('home');
+  },
+  methods: {
+    /**
+     * get posts by connecting url
+     * @param {*} section => url
+     */
+    getPosts(section){
+      let url = setUrl(section);
+      axios.get(url)
+      .then(
+        response => {
+          this.results = response.data.results;
+        }
+      ).catch(
+        error => {
+          console.log(error);
+        }
+      );
     }
   }
 });
