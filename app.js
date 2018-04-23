@@ -1,9 +1,11 @@
 'use strict';
 
 // NYT-API base url
-const ApiBaseUrl = 'https://api.nytimes.com/svc/topstories/v2/';
+let ApiBaseUrl = 'https://api.nytimes.com/svc/topstories/v2/';
 // NYT-API Key
-const ApiKey = 'd6c24974592e4c28a27e2c7eecc4c5fe';
+let ApiKey = 'd6c24974592e4c28a27e2c7eecc4c5fe';
+// Category
+const SECTIONS = "home, arts, automobiles, books, business, fashion, food, health, insider, magazine, movies, national, nyregion, obituaries, opinion, politics, realestate, science, sports, sundayreview, technology, theater, tmagazine, travel, upshot, world";
 
 /**
  * @returns url which axios connects.
@@ -73,10 +75,14 @@ Vue.component('news-list', {
 const vm = new Vue({
   el: '#app',
   data: {
-    results: [ /* news posts data */ ]
+    // news from NYT
+    results: [],
+    sections: SECTIONS.split(', '),
+    // default section
+    section: 'home'
   }, 
   mounted(){
-    this.getPosts('home');
+    this.getPosts(this.section);
   },
   methods: {
     /**

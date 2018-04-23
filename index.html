@@ -10,6 +10,19 @@
 <body>
   <div class="container" id="app">
     <h3 class="text-center">Vue News from NYT</h3>
+    <!-- News Categories -->
+    <section class="callout secondary">
+      <h4 class="text-center">Select News Category</h4>
+      <form>
+        <div class="row text-center">
+          <div class="large-6" style="margin: 20px auto 0;">
+            <select v-model="section" @change="getPosts(section)">
+              <option v-for="section in sections" :value="section">{{ section }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </section>
     <news-list :results="results"></news-list>
   </div>
   <script src="https://unpkg.com/vue"></script>
