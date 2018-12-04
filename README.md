@@ -10,7 +10,7 @@ nake226
   - Vue.js
   
 #### How to use
-  i. clone this app on your lcoal.
+  i. clone this app on your lcoal.  
   ii. open index.html on browser
   
 That's all.
