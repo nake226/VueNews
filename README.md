@@ -1,1 +1,4 @@
-Appname
+#### AppName
+VueNews
+#### Author
+nake226
